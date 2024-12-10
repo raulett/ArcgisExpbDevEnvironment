@@ -17,6 +17,8 @@ services:
       - EXB_USER
       - EXB_PORT_HTTP
       - EXB_PORT_HTTPS
+      - WIDGET_FOLDER
+      - WIDGET_NAME
     command: >
       bash -c "cd ../server &&
       npm --prefix ../client start & npm start"
