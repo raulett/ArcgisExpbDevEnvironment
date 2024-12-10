@@ -1,0 +1,22 @@
+services:
+  exb_dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    user: ${EXB_USER}
+    volumes:
+      - "${WIDGET_FOLDER}/${WIDGET_NAME}/:/home/node/ArcGISExperienceBuilder/client/your-extensions/widgets/${WIDGET_NAME}/"
+      - ./data/dist_widget/:/home/node/ArcGISExperienceBuilder/client/dist/widgets/
+      - ./data/themes:/home/node/ArcGISExperienceBuilder/client/your-extensions/themes/
+      - ./data/server_public/:/home/node/ArcGISExperienceBuilder/server/public/
+    ports:
+      - "${EXB_PORT_HTTP}:3000"
+      - "${EXB_PORT_HTTPS}:3001"
+    environment:
+      - EXB_USER
+      - EXB_PORT_HTTP
+      - EXB_PORT_HTTPS
+    command: >
+      bash -c "cd ../server &&
+      npm --prefix ../client start & npm start"
